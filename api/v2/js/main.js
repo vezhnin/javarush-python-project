@@ -46,7 +46,7 @@ customPlugins.forEach(customPlugin => {
 });
 
 // Инициализация Prism после загрузки всех скриптов
-prismScript.onload = function() {
+window.onload = function() {
     window.Prism = window.Prism || {};
     window.Prism.manual = true;
 
