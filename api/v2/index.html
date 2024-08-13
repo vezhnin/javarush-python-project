@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru" class="light"><!-- remove class="light" to enable dark theme -->
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson Viewer</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/view.css">
+</head>
+<body>
+
+<div class="content lecture-content post-content">
+
+    <pre class="language-java line-numbers"><code>
+public class BotConfiguration {
+    public static final String MICROSOFT_APP_ID = "YOUR_APP_ID";
+    public static final String MICROSOFT_APP_PASSWORD = "YOUR_APP_PASSWORD";
+}
+</code></pre>
+
+</div>
+
+<script src="js/prismjs/prism.js"></script>
+<script src="js/prismjs/components/prism-java.js"></script>
+<script src="js/prismjs/components/prism-kotlin.js"></script>
+<script src="js/prismjs/components/prism-groovy.js"></script>
+<script src="js/prismjs/components/prism-sql.js"></script>
+<script src="js/prismjs/components/prism-yaml.js"></script>
+<script src="js/prismjs/components/prism-python.js"></script>
+<script src="js/prismjs/components/prism-c.js"></script>
+<script src="js/prismjs/components/prism-cpp.js"></script>
+<script src="js/prismjs/components/prism-swift.js"></script>
+<script src="js/prismjs/components/prism-go.js"></script>
+<script src="js/prismjs/components/prism-csharp.js"></script>
+<script src="js/prismjs/components/prism-docker.js"></script>
+<script src="js/prismjs/components/prism-shell-session.js"></script>
+<script src="js/prismjs/components/prism-typescript.js"></script>
+<script src="js/prismjs/components/prism-json.js"></script>
+<script src="js/prismjs/plugins/line-highlight/prism-line-highlight.js"></script>
+<script src="js/prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.js"></script>
+<script src="js/prismjs/plugins/keep-markup/prism-keep-markup.js"></script>
+<script src="js/prismjs-custom/prism-line-numbers.js"></script>
+<script src="js/prismjs-custom/prism-show-invisibles.js"></script>
+
+<script>
+    window.Prism = window.Prism || {};
+    window.Prism.manual = true;
+
+    const codeElements = document.querySelectorAll("pre[class*=lang] code, pre[class*=line-numbers] code");
+    Array.from(codeElements).forEach((codeElement) => {
+        // Prism highlighting
+        Prism.highlightElement(codeElement, false);
+    });
+</script>
+
+</body>
+</html>
