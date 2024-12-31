@@ -10,7 +10,7 @@ document.head.appendChild(prismScript);
 // Подключаем компоненты синтаксиса
 const components = [
     'java', 'kotlin', 'groovy', 'sql', 'yaml', 'python', 
-    'c', 'cpp', 'swift', 'go', 'csharp', 'docker', 
+    'c', 'cpp', 'swift', 'go', 'csharp', 'docker', 'bash',
     'shell-session', 'typescript', 'json'
 ];
 
@@ -46,7 +46,7 @@ customPlugins.forEach(customPlugin => {
 });
 
 // Инициализация Prism после загрузки всех скриптов
-window.onload = function() {
+function updateAllElements() {
     window.Prism = window.Prism || {};
     window.Prism.manual = true;
 
@@ -55,4 +55,9 @@ window.onload = function() {
     Array.from(codeElements).forEach((codeElement) => {
         Prism.highlightElement(codeElement, false);
     });
+}
+
+window.onload = function() {
+    updateAllElements();
+    setTimeout(updateAllElements, 1000);
 };
