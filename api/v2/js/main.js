@@ -9,9 +9,9 @@ document.head.appendChild(prismScript);
 
 // Подключаем компоненты синтаксиса
 const components = [
-    'java', 'kotlin', 'groovy', 'sql', 'yaml', 'python', 
+    'java', 'kotlin', 'groovy', 'sql', 'plsql', 'yaml', 'python',
     'c', 'cpp', 'swift', 'go', 'csharp', 'docker', 'bash',
-    'shell-session', 'typescript', 'json'
+    'shell-session', 'typescript', 'jsx', 'tsx', 'json', 'markdown', 'nginx'
 ];
 
 components.forEach(component => {
