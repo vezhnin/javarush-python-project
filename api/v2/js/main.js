@@ -1,63 +1,57 @@
-// Объединение всех скриптов PrismJS и плагинов
-//https://vezhnin.github.io/javarush-python-project/style/v1/style.css
 const host = "https://vezhnin.github.io/javarush-python-project/api/v2/"
 
-// Подключаем основной файл PrismJS
-const prismScript = document.createElement('script');
-prismScript.src = host + 'js/prismjs/prism.js';
-document.head.appendChild(prismScript);
+function loadScript(src) {
+    return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+    });
+}
 
-// Подключаем компоненты синтаксиса
-const components = [
-    'java', 'kotlin', 'groovy', 'sql', 'plsql', 'yaml', 'python',
-    'c', 'cpp', 'swift', 'go', 'csharp', 'docker', 'bash',
-    'shell-session', 'typescript', 'jsx', 'tsx', 'json', 'markdown', 'nginx'
-];
+async function main() {
+    // 1. Prism Core
+    await loadScript(host + 'js/prismjs/prism.js');
 
-components.forEach(component => {
-    const script = document.createElement('script');
-    script.src = host + `js/prismjs/components/prism-${component}.js`;
-    document.head.appendChild(script);
-});
+    // 2. Components
+    const components = [
+        'java', 'kotlin', 'groovy', 'sql', 'plsql', 'yaml', 'python',
+        'c', 'cpp', 'swift', 'go', 'csharp', 'docker', 'bash',
+        'shell-session', 'typescript', 'jsx', 'tsx', 'json', 'markdown', 'nginx'
+    ];
+    for (const component of components) {
+        await loadScript(host + `js/prismjs/components/prism-${component}.js`);
+    }
 
-// Подключаем плагины PrismJS
-const plugins = [
-    'line-highlight/prism-line-highlight.js',
-    'normalize-whitespace/prism-normalize-whitespace.js',
-    'keep-markup/prism-keep-markup.js'
-];
+    // 3. Plugins
+    const plugins = [
+        'line-highlight/prism-line-highlight.js',
+        'normalize-whitespace/prism-normalize-whitespace.js',
+        'keep-markup/prism-keep-markup.js'
+    ];
+    for (const plugin of plugins) {
+        await loadScript(host + `js/prismjs/plugins/${plugin}`);
+    }
 
-plugins.forEach(plugin => {
-    const script = document.createElement('script');
-    script.src = host + `js/prismjs/plugins/${plugin}`;
-    document.head.appendChild(script);
-});
+    // 4. Custom Plugins
+    const customPlugins = [
+        'prism-line-numbers.js',
+        'prism-show-invisibles.js'
+    ];
+    for (const customPlugin of customPlugins) {
+        await loadScript(host + `js/prismjs-custom/${customPlugin}`);
+    }
 
-// Подключаем кастомные плагины
-const customPlugins = [
-    'prism-line-numbers.js',
-    'prism-show-invisibles.js'
-];
-
-customPlugins.forEach(customPlugin => {
-    const script = document.createElement('script');
-    script.src = host + `js/prismjs-custom/${customPlugin}`;
-    document.head.appendChild(script);
-});
-
-// Инициализация Prism после загрузки всех скриптов
-function updateAllElements() {
+    // 5. Запускаем подсветку, когда все скрипты загружены
     window.Prism = window.Prism || {};
     window.Prism.manual = true;
 
-    // Подсвечиваем код на странице
     const codeElements = document.querySelectorAll("pre[class*=lang] code, pre[class*=line-numbers] code");
     Array.from(codeElements).forEach((codeElement) => {
         Prism.highlightElement(codeElement, false);
     });
 }
 
-window.onload = function() {
-    updateAllElements();
-    setTimeout(updateAllElements, 1000);
-};
+// Запуск main после загрузки DOM (рекомендовано)
+window.addEventListener('DOMContentLoaded', main);
