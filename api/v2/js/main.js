@@ -11,26 +11,22 @@ function loadScript(src) {
 }
 
 async function main() {
-    // 0) Ручной режим Prism — до загрузки core!
+    // 0) Prism ручной режим
     window.Prism = window.Prism || {};
     window.Prism.manual = true;
 
     // 1) Prism Core
     await loadScript(host + 'js/prismjs/prism.js');
 
-    // 2) Components (последовательно или параллельно — на твой вкус)
+    // 2) Components
     const components = [
-        'java','kotlin','groovy','sql','plsql','yaml','python',
-        'c','cpp','swift','go','csharp','docker','bash',
-        'shell-session','typescript','jsx','tsx','json','markdown','nginx'
+        'java', 'kotlin', 'groovy', 'sql', 'plsql', 'yaml', 'python',
+        'c', 'cpp', 'swift', 'go', 'csharp', 'docker', 'bash',
+        'shell-session', 'typescript', 'jsx', 'tsx', 'json', 'markdown', 'nginx'
     ];
-    // for (const comp of components) {
-    //     await loadScript(host + `js/prismjs/components/prism-${comp}.js`);
-    // }
-    // (или быстрее)
     await Promise.all(components.map(c => loadScript(host + `js/prismjs/components/prism-${c}.js`)));
 
-    // 3) Plugins (Keep Markup обязателен — до подсветки)
+    // 3) Plugins
     const plugins = [
         'line-highlight/prism-line-highlight.js',
         'normalize-whitespace/prism-normalize-whitespace.js',
@@ -46,14 +42,21 @@ async function main() {
         await loadScript(host + `js/prismjs-custom/${cp}`);
     }
 
-    // 5) Подсветка (теперь точно всё загружено)
+    // 5) Mermaid.js
+    await loadScript("https://cdn.jsdelivr.net/npm/mermaid@11.10.1/dist/mermaid.min.js");
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: "default"
+    });
+
+    // 6) Prism подсветка
     const codeElements = document.querySelectorAll(
         'pre[class*="language-"] code, pre[class*="lang"] code, pre[class*="line-numbers"] code'
     );
     codeElements.forEach(code => Prism.highlightElement(code, false));
 }
 
-// Запускаем строго после DOMContentLoaded (без бага с setTimeout)
+// DOM Ready
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', main);
 } else {
